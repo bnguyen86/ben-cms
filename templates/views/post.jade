@@ -27,3 +27,12 @@ block content
 					if data.post.image.exists
 						.image-wrap: img(src=data.post._.image.fit(750,450)).img-responsive
 					!= data.post.content.full
+			hr
+			| Leave a comment:
+			br
+			textarea
+			h3 Comments
+			each c in data.comments
+				h5=c.subject
+				p=c.content
+					#{c.publishedDate}

@@ -11,7 +11,8 @@ exports = module.exports = function(req, res) {
 		post: req.params.post
 	};
 	locals.data = {
-		posts: []
+		posts: [],
+		comments: []
 	};
 	
 	// Load the current post
@@ -24,6 +25,13 @@ exports = module.exports = function(req, res) {
 		
 		q.exec(function(err, result) {
 			locals.data.post = result;
+
+			var r = keystone.list('Comment').model.find().where('post', result._id).sort('-publishedDate');
+			
+			r.exec(function(err, results) {
+				locals.data.comments = results;
+			});
+
 			next(err);
 		});
 		
